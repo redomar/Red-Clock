@@ -1,5 +1,10 @@
 package com.redomar.clock;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
 import com.redomar.clock.frame.ClockFrame;
 
 public class ClockMain implements Runnable {
@@ -82,6 +87,20 @@ public class ClockMain implements Runnable {
 
 	private void render() {
 
+		BufferStrategy bs = frame.getBufferStrategy();
+		if(bs == null){
+			frame.createBufferStrategy(3);
+			return;
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, getTotalWidth(), getTotalhight());
+		g.setColor(Color.ORANGE);
+		g.setFont(new Font("Arial", java.awt.Font.BOLD, 20));
+		g.drawString(NAME, 0, getTotalhight()/2);
+		bs.show();
+		g.dispose();
 	}
 
 	// This is where you can start the application from
@@ -109,6 +128,26 @@ public class ClockMain implements Runnable {
 
 	public void setRunning(boolean running) {
 		this.running = running;
+	}
+
+	public int getWIDTH() {
+		return WIDTH;
+	}
+	
+	public int getTotalWidth(){
+		return (WIDTH*SCALE)+10;
+	}
+
+	public int getHEIGHT() {
+		return HEIGHT;
+	}
+	
+	public int getTotalhight(){
+		return (HEIGHT*SCALE)+10;
+	}
+
+	public int getSCALE() {
+		return SCALE;
 	}
 
 }
